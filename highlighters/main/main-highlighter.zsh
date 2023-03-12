@@ -32,9 +32,9 @@
 : ${ZSH_HIGHLIGHT_STYLES[default]:=none}
 : ${ZSH_HIGHLIGHT_STYLES[unknown-token]:=fg=red,bold}
 : ${ZSH_HIGHLIGHT_STYLES[reserved-word]:=fg=yellow}
-: ${ZSH_HIGHLIGHT_STYLES[suffix-alias]:=fg=green,underline}
+: ${ZSH_HIGHLIGHT_STYLES[suffix-alias]:=fg=#1d1,underline}
 : ${ZSH_HIGHLIGHT_STYLES[global-alias]:=fg=cyan}
-: ${ZSH_HIGHLIGHT_STYLES[precommand]:=fg=green,underline}
+: ${ZSH_HIGHLIGHT_STYLES[precommand]:=fg=#1d1,underline}
 : ${ZSH_HIGHLIGHT_STYLES[commandseparator]:=none}
 : ${ZSH_HIGHLIGHT_STYLES[autodirectory]:=fg=green,underline}
 : ${ZSH_HIGHLIGHT_STYLES[path]:=underline}
@@ -46,8 +46,8 @@
 : ${ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]:=fg=magenta}
 : ${ZSH_HIGHLIGHT_STYLES[process-substitution]:=none}
 : ${ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]:=fg=magenta}
-: ${ZSH_HIGHLIGHT_STYLES[single-hyphen-option]:=none}
-: ${ZSH_HIGHLIGHT_STYLES[double-hyphen-option]:=none}
+: ${ZSH_HIGHLIGHT_STYLES[single-hyphen-option]:=fg=blue}
+: ${ZSH_HIGHLIGHT_STYLES[double-hyphen-option]:=fg=blue}
 : ${ZSH_HIGHLIGHT_STYLES[back-quoted-argument]:=none}
 : ${ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]:=fg=magenta}
 : ${ZSH_HIGHLIGHT_STYLES[single-quoted-argument]:=fg=yellow}
@@ -62,7 +62,7 @@
 : ${ZSH_HIGHLIGHT_STYLES[comment]:=fg=black,bold}
 : ${ZSH_HIGHLIGHT_STYLES[named-fd]:=none}
 : ${ZSH_HIGHLIGHT_STYLES[numeric-fd]:=none}
-: ${ZSH_HIGHLIGHT_STYLES[arg0]:=fg=green}
+: ${ZSH_HIGHLIGHT_STYLES[arg0]:=fg=#1d1}
 
 # Whether the highlighter should be called or not.
 _zsh_highlight_highlighter_main_predicate()
@@ -435,7 +435,7 @@ _zsh_highlight_highlighter_main_paint()
 }
 
 # Try to expand $1, if it's possible to do so safely.
-# 
+#
 # Uses two parameters from the caller: $parameter_name_pattern and $res.
 #
 # If expansion was done, set $reply to the expansion and return true.
@@ -461,7 +461,7 @@ _zsh_highlight_main_highlighter__try_expand_parameter()
       else
         parameter_name=${arg:1}
       fi
-      if [[ $res == none ]] && 
+      if [[ $res == none ]] &&
          [[ ${parameter_name} =~ ^${~parameter_name_pattern}$ ]] &&
          [[ ${(tP)MATCH} != *special* ]]
       then
@@ -784,7 +784,7 @@ _zsh_highlight_main_highlighter_highlight_list()
     if (( ! in_redirection )); then
       if [[ $this_word == *':sudo_opt:'* ]]; then
         if [[ -n $flags_with_argument ]] &&
-           { 
+           {
              # Trenary
              if [[ -n $flags_sans_argument ]]
              then [[ $arg == '-'[$flags_sans_argument]#[$flags_with_argument] ]]
@@ -812,7 +812,7 @@ _zsh_highlight_main_highlighter_highlight_list()
           this_word=':sudo_opt:'
           next_word+=':start:'
           next_word+=':sudo_opt:'
-        elif [[ -n $flags_solo ]] && 
+        elif [[ -n $flags_solo ]] &&
              {
                # Trenary
                if [[ -n $flags_sans_argument ]]
@@ -870,7 +870,7 @@ _zsh_highlight_main_highlighter_highlight_list()
       elif [[ $this_word == *':start:'* ]] && [[ $arg == $'\n' ]]; then
         style=commandseparator
       elif [[ $this_word == *':start:'* ]] && [[ $arg == ';' ]] && (( $#in_alias )); then
-        style=commandseparator 
+        style=commandseparator
       else
         # Empty commands (semicolon follows nothing) are valid syntax.
         # However, in interactive use they are likely to be erroneous;
@@ -879,7 +879,7 @@ _zsh_highlight_main_highlighter_highlight_list()
         # Alias definitions are exempted from this check to allow multiline aliases
         # with explicit (redundant) semicolons: «alias foo=$'bar;\nbaz'» (issue #677).
         #
-        # See also #691 about possibly changing the style used here. 
+        # See also #691 about possibly changing the style used here.
         style=unknown-token
       fi
 
@@ -1034,7 +1034,7 @@ _zsh_highlight_main_highlighter_highlight_list()
                           else
                             # assignment to a scalar parameter.
                             # (For array assignments, the command doesn't start until the ")" token.)
-                            # 
+                            #
                             # Discard  :start_of_pipeline:, if present, as '!' is not valid
                             # after assignments.
                             next_word+=':start:'
