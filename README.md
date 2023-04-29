@@ -1,3 +1,10 @@
+My fork of `zsh-syntax-highlighting`.
+
+To set upstream remote to original zsh-syntax-highlighting repo:
+```sh
+git remote add upstream git@github.com:zsh-users/zsh-syntax-highlighting.git
+```
+
 zsh-syntax-highlighting [![Build Status][build-status-image]][build-status]
 =======================
 
